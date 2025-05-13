@@ -1,0 +1,8 @@
+{
+  "name": "timezone-calc",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "luxon": "^3.0.0"
+  }
+}
