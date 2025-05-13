@@ -8,8 +8,14 @@ export default function handler(req, res) {
   const { dataA, dataB, timeZoneA, timeZoneB } = req.body;
 
   try {
-    const dtA = DateTime.fromISO(dataA, { zone: timeZoneA });
-    const dtB = DateTime.fromISO(dataB, { zone: timeZoneB });
+    const format = 'LLL dd, yyyy h:mm a'; // Ex: "May 12, 2025 2:42 pm"
+
+    const dtA = DateTime.fromFormat(dataA, format, { zone: timeZoneA });
+    const dtB = DateTime.fromFormat(dataB, format, { zone: timeZoneB });
+
+    if (!dtA.isValid || !dtB.isValid) {
+      throw new Error('Formato de data inválido. Use "May 12, 2025 2:42 pm"');
+    }
 
     const diffInHours = dtB.diff(dtA, 'hours').hours;
 
