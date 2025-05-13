@@ -22,11 +22,12 @@ export default function handler(req, res) {
 
     const horas = Math.floor(diffInHours);
     const minutos = Math.round((diffInHours - horas) * 60);
+    const minutosFormatados = minutos.toString().padStart(2, '0'); // <- Aqui é o segredo
 
     res.status(200).json({
-      duracao_total_em_horas: parseFloat(diffInHours.toFixed(3)), // ex: 7.333
+      duracao_total_em_horas: parseFloat(diffInHours.toFixed(3)),
       horas,
-      minutos
+      minutos: minutosFormatados
     });
   } catch (error) {
     res.status(400).json({ error: 'Erro ao processar datas', detalhes: error.toString() });
