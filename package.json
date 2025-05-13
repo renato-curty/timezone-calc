@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "luxon": "^3.0.0"
-  }
+  "geocoder": "^1.0.0",
+  "luxon": "^3.0.0"
+}
 }
