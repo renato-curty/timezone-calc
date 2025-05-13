@@ -17,9 +17,17 @@ export default function handler(req, res) {
       throw new Error('Formato de data inválido. Use "May 12, 2025 2:42 pm"');
     }
 
-    const diffInHours = dtB.diff(dtA, 'hours').hours;
+    const diffInMinutes = dtB.diff(dtA, 'minutes').minutes;
+    const diffInHours = diffInMinutes / 60;
 
-    res.status(200).json({ diferenca_em_horas: diffInHours });
+    const horas = Math.floor(diffInHours);
+    const minutos = Math.round((diffInHours - horas) * 60);
+
+    res.status(200).json({
+      duracao_total_em_horas: parseFloat(diffInHours.toFixed(3)), // ex: 7.333
+      horas,
+      minutos
+    });
   } catch (error) {
     res.status(400).json({ error: 'Erro ao processar datas', detalhes: error.toString() });
   }
