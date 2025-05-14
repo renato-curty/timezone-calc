@@ -1,26 +1,18 @@
-// api/getTimezones.js
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-// Função para ler o arquivo de timezones e retornar como JSON
 function getAllTimezones() {
-  const filePath = path.join(__dirname, '../data/timezones.json'); // Caminho para o arquivo JSON
+  const filePath = path.join(process.cwd(), 'data/timezones.json'); // usando process.cwd() para o diretório correto
   const raw = fs.readFileSync(filePath, 'utf-8');
   const timezones = JSON.parse(raw);
   return timezones;
 }
 
-// Exportando a função para ser usada pelo Vercel
-module.exports = async (req, res) => {
+export default function handler(req, res) {
   if (req.method === 'GET') {
-    try {
-      const timezones = getAllTimezones(); // Obtém os timezones
-      res.status(200).json(timezones); // Envia os timezones como resposta JSON
-    } catch (error) {
-      res.status(500).json({ message: 'Error reading timezones data', error: error.message });
-    }
+    const timezones = getAllTimezones();
+    res.status(200).json(timezones);
   } else {
-    // Se a requisição não for GET, retorna método não permitido
     res.status(405).json({ message: 'Method Not Allowed' });
   }
-};
+}
